@@ -13,12 +13,29 @@ const (
 	completedTasks = "/completed"
 )
 
+type StubTaskStore struct {
+	// @TODO: This is under the assumption that there is only one task per status
+	tasks map[string]string
+}
+
+func (s *StubTaskStore) GetTask(taskStatus string) string {
+	return s.tasks[taskStatus]
+}
+
 func TestGETTasks(t *testing.T) {
+	store := StubTaskStore{
+		map[string]string{
+			"/active":    "Learn GO",
+			"/completed": "Drink Coffee",
+		},
+	}
+	server := &server.TaskServer{&store}
+
 	t.Run("it shows an active task name", func(t *testing.T) {
 		request := newGetTaskRequest(activeTasks)
 		response := httptest.NewRecorder()
 
-		server.TodoServer(response, request)
+		server.ServeHTTP(response, request)
 
 		assertResponseBody(t, response.Body.String(), "<li>Learn GO</li>")
 	})
@@ -27,7 +44,7 @@ func TestGETTasks(t *testing.T) {
 		request := newGetTaskRequest(completedTasks)
 		response := httptest.NewRecorder()
 
-		server.TodoServer(response, request)
+		server.ServeHTTP(response, request)
 
 		assertResponseBody(t, response.Body.String(), "<li>Drink Coffee</li>")
 	})

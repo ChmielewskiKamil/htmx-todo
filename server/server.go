@@ -6,8 +6,16 @@ import (
 	"htmx-todo/templates"
 )
 
-func TodoServer(w http.ResponseWriter, r *http.Request) {
-	templates.Task(GetTask(r.URL.String())).Render(r.Context(), w)
+type TaskStore interface {
+	GetTask(taskStatus string) string
+}
+
+type TaskServer struct {
+	Store TaskStore
+}
+
+func (s *TaskServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	templates.Task(s.Store.GetTask(r.URL.String())).Render(r.Context(), w)
 }
 
 func GetTask(taskStatus string) string {

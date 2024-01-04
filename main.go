@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	handler := http.HandlerFunc(server.TodoServer)
-	log.Fatal(http.ListenAndServe("127.0.0.1:8080", handler))
+	server := &server.TaskServer{}
+	log.Fatal(http.ListenAndServe("127.0.0.1:8080", server))
 }
