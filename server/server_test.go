@@ -61,13 +61,6 @@ func TestGETTasks(t *testing.T) {
 	})
 }
 
-func assertStatusCode(t testing.TB, got int, want int) {
-	t.Helper()
-	if got != want {
-		t.Errorf("Got status %d, wanted %d", got, want)
-	}
-}
-
 ////////////////////////////////////////////////////////////////////
 //                            HELPERS			                  //
 ////////////////////////////////////////////////////////////////////
@@ -82,5 +75,12 @@ func assertResponseBody(t testing.TB, got, want string) {
 
 	if got != want {
 		t.Errorf("Got response: %q, wanted: %q", got, want)
+	}
+}
+
+func assertStatusCode(t testing.TB, got int, want int) {
+	t.Helper()
+	if got != want {
+		t.Errorf("Got status %d, wanted %d", got, want)
 	}
 }
