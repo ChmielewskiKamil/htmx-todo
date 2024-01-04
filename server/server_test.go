@@ -48,6 +48,20 @@ func TestGETTasks(t *testing.T) {
 
 		assertResponseBody(t, response.Body.String(), "<li>Drink Coffee</li>")
 	})
+
+	t.Run("it returns 404 on missing url", func(t *testing.T) {
+		request := newGetTaskRequest("/missingURL")
+		response := httptest.NewRecorder()
+
+		server.ServeHTTP(response, request)
+
+		got := response.Code
+		want := http.StatusNotFound
+
+		if got != want {
+			t.Errorf("Got status %d, wanted %d", got, want)
+		}
+	})
 }
 
 ////////////////////////////////////////////////////////////////////

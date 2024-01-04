@@ -15,6 +15,7 @@ type TaskServer struct {
 }
 
 func (s *TaskServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
 	templates.Task(s.Store.GetTask(r.URL.String())).Render(r.Context(), w)
 }
 
