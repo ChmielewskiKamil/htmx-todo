@@ -10,4 +10,4 @@ run:
 	@echo "[INFO] Building the app..."
 	go build -o bin/
 	@echo "[INFO] Launching the server..."
-	./htmx-todo
+	./bin/htmx-todo
