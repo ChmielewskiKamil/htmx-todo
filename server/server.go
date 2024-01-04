@@ -15,13 +15,17 @@ type TaskServer struct {
 }
 
 func (s *TaskServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	task := GetTask(r.URL.String())
+	if r.Method == http.MethodPost {
+		w.WriteHeader(http.StatusAccepted)
+	} else {
+		task := GetTask(r.URL.String())
 
-	if task == "" {
-		w.WriteHeader(http.StatusNotFound)
+		if task == "" {
+			w.WriteHeader(http.StatusNotFound)
+		}
+
+		templates.Task(task).Render(r.Context(), w)
 	}
-
-	templates.Task(task).Render(r.Context(), w)
 }
 
 func GetTask(taskStatus string) string {

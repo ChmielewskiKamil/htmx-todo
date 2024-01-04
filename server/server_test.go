@@ -65,6 +65,19 @@ func TestGetTasks(t *testing.T) {
 	})
 }
 
+func TestStoreTasks(t *testing.T) {
+	store := StubTaskStore{}
+	server := &server.TaskServer{&store}
+	t.Run("it returns accepted on POST", func(t *testing.T) {
+		request, _ := http.NewRequest(http.MethodPost, activeTasks, nil)
+		response := httptest.NewRecorder()
+
+		server.ServeHTTP(response, request)
+
+		assertStatusCode(t, response.Code, http.StatusAccepted)
+	})
+}
+
 ////////////////////////////////////////////////////////////////////
 //                            HELPERS			                  //
 ////////////////////////////////////////////////////////////////////
