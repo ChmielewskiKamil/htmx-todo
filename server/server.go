@@ -7,11 +7,17 @@ import (
 )
 
 func TodoServer(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/completed" {
-		templates.Task("Drink Coffee").Render(r.Context(), w)
+	templates.Task(GetTask(r.URL.String())).Render(r.Context(), w)
+}
+
+func GetTask(taskStatus string) string {
+	if taskStatus == "/completed" {
+		return "Drink Coffee"
 	}
 
-	if r.URL.Path == "/active" {
-		templates.Task("Learn GO").Render(r.Context(), w)
+	if taskStatus == "/active" {
+		return "Learn GO"
 	}
+
+	return ""
 }
