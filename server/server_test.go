@@ -22,6 +22,10 @@ func (s *StubTaskStore) GetTask(taskStatus string) string {
 	return s.tasks[taskStatus]
 }
 
+////////////////////////////////////////////////////////////////////
+//                             TESTS  			                  //
+////////////////////////////////////////////////////////////////////
+
 func TestGETTasks(t *testing.T) {
 	store := StubTaskStore{
 		map[string]string{
