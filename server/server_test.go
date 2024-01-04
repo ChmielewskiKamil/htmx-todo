@@ -15,12 +15,7 @@ func TestGETTasks(t *testing.T) {
 
 		server.TodoServer(response, request)
 
-		got := response.Body.String()
-		want := "<li>Learn GO</li>"
-
-		if got != want {
-			t.Errorf("got %q, want %q", got, want)
-		}
+		assertResponseBody(t, response.Body.String(), "<li>Learn GO</li>")
 	})
 
 	t.Run("it shows a completed task name", func(t *testing.T) {
@@ -29,11 +24,14 @@ func TestGETTasks(t *testing.T) {
 
 		server.TodoServer(response, request)
 
-		got := response.Body.String()
-		want := "<li>Drink Coffee</li>"
-
-		if got != want {
-			t.Errorf("got %q, want %q", got, want)
-		}
+		assertResponseBody(t, response.Body.String(), "<li>Drink Coffee</li>")
 	})
+}
+
+func assertResponseBody(t testing.TB, got, want string) {
+	t.Helper()
+
+	if got != want {
+		t.Errorf("Got response: %q, wanted: %q", got, want)
+	}
 }
