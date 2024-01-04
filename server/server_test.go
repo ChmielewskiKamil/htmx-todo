@@ -26,7 +26,7 @@ func (s *StubTaskStore) GetTask(taskStatus string) string {
 //                             TESTS  			                  //
 ////////////////////////////////////////////////////////////////////
 
-func TestGETTasks(t *testing.T) {
+func TestGetTasks(t *testing.T) {
 	store := StubTaskStore{
 		map[string]string{
 			"/active":    "Learn GO",
