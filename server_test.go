@@ -8,7 +8,7 @@ import (
 
 func TestTodoServer(t *testing.T) {
 	t.Run("it shows a task name", func(t *testing.T) {
-		request, _ := http.NewRequest(http.MethodGet, "/", nil)
+		request, _ := http.NewRequest(http.MethodGet, "/active", nil)
 		response := httptest.NewRecorder()
 
 		TodoServer(response, request)
