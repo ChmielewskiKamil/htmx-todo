@@ -37,6 +37,7 @@ func TestGETTasks(t *testing.T) {
 
 		server.ServeHTTP(response, request)
 
+		assertStatusCode(t, response.Code, http.StatusOK)
 		assertResponseBody(t, response.Body.String(), "<li>Learn GO</li>")
 	})
 
@@ -46,6 +47,7 @@ func TestGETTasks(t *testing.T) {
 
 		server.ServeHTTP(response, request)
 
+		assertStatusCode(t, response.Code, http.StatusOK)
 		assertResponseBody(t, response.Body.String(), "<li>Drink Coffee</li>")
 	})
 
@@ -55,13 +57,15 @@ func TestGETTasks(t *testing.T) {
 
 		server.ServeHTTP(response, request)
 
-		got := response.Code
-		want := http.StatusNotFound
-
-		if got != want {
-			t.Errorf("Got status %d, wanted %d", got, want)
-		}
+		assertStatusCode(t, response.Code, http.StatusNotFound)
 	})
+}
+
+func assertStatusCode(t testing.TB, got int, want int) {
+	t.Helper()
+	if got != want {
+		t.Errorf("Got status %d, wanted %d", got, want)
+	}
 }
 
 ////////////////////////////////////////////////////////////////////
